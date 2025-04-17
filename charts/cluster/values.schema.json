@@ -296,44 +296,19 @@
                 },
                 "resources": {
                     "type": "object"
-                },
-                "roles": {
-                    "type": "array"
-                },
-                "serviceAccountTemplate": {
-                    "type": "object"
-                },
-                "services": {
-                    "type": "object"
-                },
-                "storage": {
+              "replicationSlots": {
+                "type": "object",
+                "properties": {
+                  "highAvailability": {
                     "type": "object",
                     "properties": {
-                        "size": {
-                            "type": "string"
-                        },
-                        "storageClass": {
-                            "type": "string"
-                        }
+                      "enabled": {
+                        "type": "boolean"
+                      }
                     }
-                },
-                "superuserSecret": {
-                    "type": "string"
-                },
-                "walStorage": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "size": {
-                            "type": "string"
-                        },
-                        "storageClass": {
-                            "type": "string"
-                        }
-                    }
+                  }
                 }
+              },
             }
         },
         "fullnameOverride": {
