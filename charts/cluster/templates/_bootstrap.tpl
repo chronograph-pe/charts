@@ -91,20 +91,28 @@ externalClusters:
       name: {{ .Values.recovery.backupName }}
     {{- else if eq .Values.recovery.method "object_store" }}
     source: objectStoreRecoveryCluster
+    {{- else if eq .Values.recovery.method "volumeSnapshot" }}
+    volumeSnapshots:
+      storage:
+        apiGroup: {{ .Values.recovery.volumeSnapshots.storage.apiGroup | quote }}
+        kind: {{ .Values.recovery.volumeSnapshots.storage.kind | quote }}
+        name: {{ .Values.recovery.volumeSnapshots.storage.name | quote }}
     {{- end }}
-    {{ with .Values.recovery.database }}
+    {{- with .Values.recovery.database }}
     database: {{ . }}
     {{- end }}
-    {{ with .Values.recovery.owner }}
+    {{- with .Values.recovery.owner }}
     owner: {{ . }}
     {{- end }}
 
+{{- if .Values.recovery.clusterName }}
 externalClusters:
   - name: objectStoreRecoveryCluster
     barmanObjectStore:
       serverName: {{ .Values.recovery.clusterName }}
       {{- $d := dict "chartFullname" (include "cluster.fullname" .) "scope" .Values.recovery "secretPrefix" "recovery" -}}
       {{- include "cluster.barmanObjectStoreConfig" $d | nindent 4 }}
+{{- end }}
 {{- end }}
 {{-  else }}
   {{ fail "Invalid cluster mode!" }}
